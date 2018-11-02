@@ -10,6 +10,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main extends Application {
 
@@ -29,6 +31,7 @@ public class Main extends Application {
         //CreateTestBMP.startTest();
 
         CreateTestSet.createPane();
+
     }
 
 
