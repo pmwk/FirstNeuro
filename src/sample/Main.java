@@ -30,8 +30,8 @@ public class Main extends Application {
 
         //CreateTestBMP.startTest();
 
-        CreateTestSet.createPane();
-
+        //CreateTestSet.createPane();
+        FileManager.getFontsFromJSON();
     }
 
 
