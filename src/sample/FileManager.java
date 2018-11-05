@@ -59,81 +59,50 @@ public class FileManager {
         return rgb;
     }
 
-    public static void writeCells(ListProperty<FontForTest> fonts) {
-        JSONObject fonts_json = new JSONObject();
+    public static void writeCells(String name, ListProperty<FontForTest> fonts) {
+        ArrayList<SimpleFontForTest> fonts_for_save = new ArrayList<>();
         for (int i = 0; i < fonts.size(); i++) {
-            FontForTest font = fonts.get(i);
-            JSONArray letters_json = new JSONArray();
-
+            FontForTest font  = fonts.get(i);
             ArrayList<Cell> cells = font.getCells();
+
+            ArrayList<SimpleLetter> letters_for_save = new ArrayList<>();
             for (int j = 0; j < cells.size(); j++) {
                 Cell cell = cells.get(j);
-                JSONObject letter = new JSONObject();
-
-                JSONArray rgb_json = new JSONArray();
-                int rgb[][] = cell.getRGB();
-                for (int k = 0; k < rgb.length; k++) {
-                    JSONArray rgb2_json = new JSONArray();
-                    for (int n = 0; n < rgb[k].length; n++) {
-                        rgb2_json.add(rgb[k][n]);
-                    }
-                    rgb_json.add(rgb2_json);
-                }
-
-                letter.put(String.valueOf(cell.getC()), rgb_json);
-
-                letters_json.add(letter);
+                letters_for_save.add(new SimpleLetter(cell.getC(), cell.getRGB()));
             }
+            fonts_for_save.add(new SimpleFontForTest(font.getName(), letters_for_save));
 
-            fonts_json.put(font.getName(), letters_json);
+            System.out.println("Шрифт " + i);
         }
-        File file = new File("/home/kanumba/Test1");
         try {
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(fonts_json.toString().getBytes());
-            fos.flush();
-            fos.close();
+            FileOutputStream fos = new FileOutputStream(name);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(fonts_for_save);
+            oos.flush();
+            oos.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("end");
+        System.out.println("End");
 
-        /*try {
-            File file = new File("/home/kanumba/Test1");
-            file.createNewFile();
-
-            FileOutputStream fos = new FileOutputStream(file);
-            DataOutputStream dos = new DataOutputStream(fos);
-            dos.writeI
-            int test[][] = {{1, 2, 3}, {0, 0, 0}, {0, 0, 0}};
-            for (int i = 0; i < test.length; i++) {
-                dos.write(test[i]);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
 
-    public static ArrayList<FontForTest> getFontsFromJSON () {
-        JSONParser parser = new JSONParser();
-        JSONObject fonts_json;
+    public static ArrayList<SimpleFontForTest> getFontsFromData(String name) {
+        ArrayList<SimpleFontForTest> result = new ArrayList<>();
         try {
-            fonts_json = (JSONObject) parser.parse(new FileReader("/home/kanumba/Test1"));
-            Set set = fonts_json.entrySet();
-            Object objects[] = set.toArray();
-            for (int i = 0; i < objects.length; i++) {
-                JSONObject font = (JSONObject) objects[i];
-                Set letters = font.keySet();
-                //System.out.println(font.);
-            }
+            FileInputStream fis = new FileInputStream(name);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            result = (ArrayList<SimpleFontForTest>) ois.readObject();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return result;
     }
 }

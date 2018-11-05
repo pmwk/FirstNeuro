@@ -13,6 +13,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class FontForTest {
@@ -75,7 +76,7 @@ public class FontForTest {
         return cells.get(index);
     }
 
-    private Pane view;
+    transient private Pane view;
     public Pane getView() {
         view = new Pane();
 

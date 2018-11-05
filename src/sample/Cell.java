@@ -11,6 +11,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.io.Serializable;
+
 class Cell {
 
     private static final int CELL_FONT_SIZE = 32;

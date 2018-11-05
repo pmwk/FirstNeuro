@@ -1,17 +1,11 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import javax.imageio.ImageIO;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Scanner;
 
 public class Main extends Application {
 
@@ -30,8 +24,22 @@ public class Main extends Application {
 
         //CreateTestBMP.startTest();
 
-        //CreateTestSet.createPane();
-        FileManager.getFontsFromJSON();
+        CreateTestSet.createPane();
+        //ArrayList<SimpleFontForTest> fonts = FileManager.getFontsFromData();
+
+        /*Scanner in = new Scanner(System.in);
+        while (true) {
+            int font = in.nextInt();
+            int letter = in.nextInt();
+
+            int rgb[][] = fonts.get(font).letters.get(letter).rgb;
+            for (int i = 0; i < rgb.length; i++) {
+                for (int j = 0; j < rgb[i].length; j++) {
+                    System.out.print(rgb[i][j]);
+                }
+                System.out.println();
+            }
+        }*/
     }
 
 

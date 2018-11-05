@@ -175,7 +175,7 @@ public class CreateTestSet extends Pane {
 
                 }
             }*/
-            FileManager.writeCells(fonts);
+            FileManager.writeCells(nameTestSet_tf.getText(), fonts);
         });
 
 
