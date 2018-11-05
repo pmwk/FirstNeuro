@@ -1,6 +1,8 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -24,7 +26,7 @@ public class Main extends Application {
 
         //CreateTestBMP.startTest();
 
-        CreateTestSet.createPane();
+        //CreateTestSet.createPane();
         //ArrayList<SimpleFontForTest> fonts = FileManager.getFontsFromData();
 
         /*Scanner in = new Scanner(System.in);
@@ -40,6 +42,11 @@ public class Main extends Application {
                 System.out.println();
             }
         }*/
+
+        Pane root = new MainMenu();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 

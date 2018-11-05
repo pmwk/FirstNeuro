@@ -70,14 +70,18 @@ public class FontForTest {
         for (Cell cell : cells) {
             cell.getView().setTranslateX(cell.getView().getTranslateX() + delta);
         }
+        view.setTranslateX(view.getTranslateX() + delta);
     }
 
     public Cell getCell (int index) {
         return cells.get(index);
     }
 
-    transient private Pane view;
+    private Pane view;
     public Pane getView() {
+        if (view != null) {
+            return view;
+        }
         view = new Pane();
 
         view.setPrefWidth(Cell.CELL_SIDE);
@@ -150,7 +154,8 @@ public class FontForTest {
         });
 
         delete_but.setOnMouseClicked(event -> {
-            //
+            CreateTestSet.getInstance().removeFont(this);
+            stage2.close();
         });
     }
 }

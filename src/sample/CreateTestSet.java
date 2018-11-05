@@ -20,6 +20,12 @@ import java.util.*;
 
 public class CreateTestSet extends Pane {
 
+    private static CreateTestSet instance;
+
+    public static CreateTestSet getInstance() {
+        return instance;
+    }
+
     private static final double WIDTH = 400; //начальная ширина экрана
     private static final double HEIGHT = 430; //начальная высота экрана
     private static final double BOTTOM_HEIGHT = 50; //высота нижней панели с кнопками
@@ -36,6 +42,26 @@ public class CreateTestSet extends Pane {
 
     private ListProperty<FontForTest> fonts = new SimpleListProperty<>(); //список со шрифтами
     private ListProperty<Letter> letters = new SimpleListProperty<>(); //список с буквами
+
+    public void removeFont(FontForTest font) {
+        if (fonts.contains(font)) {
+            int index = fonts.indexOf(font);
+            int size = fonts.size();
+
+            ArrayList<Cell> cells = font.getCells();
+            for (int i = 0; i < cells.size(); i++) {
+                mainPanel_root.getChildren().remove(cells.get(i).getView());
+            }
+            topPanel_root.getChildren().remove(font.getView());
+
+            for (int i = index; i < fonts.size(); i++) {
+                FontForTest font_for_offset = fonts.get(i);
+                font_for_offset.changeTranslateX(-Cell.CELL_SIDE);
+            }
+
+            fonts.remove(font);
+        }
+    }
 
     private void init() {
         createSetFonts();
@@ -57,6 +83,7 @@ public class CreateTestSet extends Pane {
     }//создаём набор букв
 
     private void createSetFonts() {
+        fonts = new SimpleListProperty<>();
         ArrayList<String> fonts_list = FileManager.getPathFont();
         fonts.set(FXCollections.observableArrayList());
         for (int i = 0; i < fonts_list.size(); i++) {
@@ -113,7 +140,7 @@ public class CreateTestSet extends Pane {
 
     }//определяет размеры основных панелей и настраивает бинды
 
-    public CreateTestSet() {
+    private CreateTestSet() {
         init();
 
         for (int i = 0; i < fonts.size(); i++) {
@@ -242,6 +269,7 @@ public class CreateTestSet extends Pane {
 
     public static void createPane() {
         CreateTestSet createTestSet = new CreateTestSet();
+        instance = createTestSet;
         scene = new Scene(createTestSet, WIDTH, HEIGHT);
         stage.setScene(scene);
         //stage.setResizable(false);
